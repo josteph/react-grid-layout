@@ -106,6 +106,8 @@ export default class ReactGridLayout extends React.Component<Props, State> {
       w: 1
     },
     resizeHandles: ["se"],
+    mixinDraggable: null,
+    mixinResizable: null,
     onLayoutChange: noop,
     onDragStart: noop,
     onDrag: noop,
@@ -515,7 +517,9 @@ export default class ReactGridLayout extends React.Component<Props, State> {
       transformScale,
       draggableCancel,
       draggableHandle,
-      resizeHandles
+      resizeHandles,
+      mixinDraggable,
+      mixinResizable
     } = this.props;
     const { mounted, droppingPosition } = this.state;
 
@@ -523,11 +527,11 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     // If an item is static, it can't be manipulated by default.
     // Any properties defined directly on the grid item will take precedence.
     const draggable =
-      typeof l.isDraggable === "boolean"
+      typeof l.isDraggable === "boolean" && mixinDraggable
         ? l.isDraggable
         : !l.static && isDraggable;
     const resizable =
-      typeof l.isResizable === "boolean"
+      typeof l.isResizable === "boolean" && mixinResizable
         ? l.isResizable
         : !l.static && isResizable;
     const resizeHandlesOptions = l.resizeHandles || resizeHandles;
@@ -569,6 +573,8 @@ export default class ReactGridLayout extends React.Component<Props, State> {
         static={l.static}
         droppingPosition={isDroppingItem ? droppingPosition : undefined}
         resizeHandles={resizeHandlesOptions}
+        mixinDraggable={mixinDraggable}
+        mixinResizable={mixinResizable}
       >
         {child}
       </GridItem>

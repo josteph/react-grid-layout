@@ -4,6 +4,10 @@ import _ from "lodash";
 import Responsive from '../../lib/ResponsiveReactGridLayout';
 import WidthProvider from '../../lib/components/WidthProvider';
 import type {CompactType, Layout} from '../../lib/utils';
+
+import mixinDraggable from '../../lib/mixins/draggable';
+import mixinResizable from '../../lib/mixins/resizable';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 type Props = {|
@@ -117,6 +121,8 @@ export default class ShowcaseLayout extends React.Component<Props, State> {
           useCSSTransforms={this.state.mounted}
           compactType={this.state.compactType}
           preventCollision={!this.state.compactType}
+          mixinDraggable={mixinDraggable}
+          mixinResizable={mixinResizable}
         >
           {this.generateDOM()}
         </ResponsiveReactGridLayout>

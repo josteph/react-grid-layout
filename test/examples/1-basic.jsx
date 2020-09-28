@@ -2,6 +2,9 @@ import React from "react";
 import _ from "lodash";
 import RGL, { WidthProvider } from "react-grid-layout";
 
+import mixinDraggable from '../../lib/mixins/draggable';
+import mixinResizable from '../../lib/mixins/resizable';
+
 const ReactGridLayout = WidthProvider(RGL);
 
 export default class BasicLayout extends React.PureComponent {
@@ -53,6 +56,8 @@ export default class BasicLayout extends React.PureComponent {
       <ReactGridLayout
         layout={this.state.layout}
         onLayoutChange={this.onLayoutChange}
+        mixinDraggable={mixinDraggable}
+        mixinResizable={mixinResizable}
         {...this.props}
       >
         {this.generateDOM()}

@@ -4,6 +4,7 @@ dist/*
 !dist/*.html
 npm-debug.log
 build/
+/mixins/
 .idea
 # Ignore built example files
 examples/*.html

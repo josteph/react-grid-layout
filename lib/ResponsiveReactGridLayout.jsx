@@ -19,6 +19,8 @@ import {
 } from "./responsiveUtils";
 import ReactGridLayout from "./ReactGridLayout";
 
+import type { Element as ReactElement } from "react";
+
 const type = obj => Object.prototype.toString.call(obj);
 
 /**
@@ -57,6 +59,17 @@ type Props<Breakpoint: string = string> = {|
   margin: { [key: Breakpoint]: [number, number] } | [number, number],
   /* prettier-ignore */
   containerPadding: { [key: Breakpoint]: ?[number, number] } | ?[number, number],
+
+  // Mixins
+  mixinDraggable?: (
+    child: ReactElement<any>,
+    isDraggable: boolean
+  ) => ReactElement<any>,
+  mixinResizable?: (
+    child: ReactElement<any>,
+    position: Position,
+    isResizable: boolean
+  ) => ReactElement<any>,
 
   // Callbacks
   onBreakpointChange: (Breakpoint, cols: number) => void,
@@ -124,6 +137,10 @@ export default class ResponsiveReactGridLayout extends React.Component<
     // The width of this component.
     // Required in this propTypes stanza because generateInitialState() will fail without it.
     width: PropTypes.number.isRequired,
+
+    // Mixins
+    mixinDraggable: PropTypes.func,
+    mixinResizable: PropTypes.func,
 
     //
     // Callbacks
@@ -302,6 +319,8 @@ export default class ResponsiveReactGridLayout extends React.Component<
       onBreakpointChange,
       onLayoutChange,
       onWidthChange,
+      mixinDraggable,
+      mixinResizable,
       ...other
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -317,6 +336,8 @@ export default class ResponsiveReactGridLayout extends React.Component<
         onLayoutChange={this.onLayoutChange}
         layout={this.state.layout}
         cols={this.state.cols}
+        mixinDraggable={mixinDraggable}
+        mixinResizable={mixinResizable}
       />
     );
   }

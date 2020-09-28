@@ -2,8 +2,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { DraggableCore } from "react-draggable";
-import { Resizable } from "react-resizable";
 import { fastPositionEqual, perc, setTopLeft, setTransform } from "./utils";
 import {
   calcGridItemPosition,
@@ -74,7 +72,17 @@ type Props = {
   maxH: number,
   i: string,
 
-  resizeHandles?: Array<'s' | 'w' | 'e' | 'n' | 'sw' | 'nw' | 'se' | 'ne'>,
+  resizeHandles?: Array<"s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne">,
+
+  mixinDraggable?: (
+    child: ReactElement<any>,
+    isDraggable: boolean
+  ) => ReactElement<any>,
+  mixinResizable?: (
+    child: ReactElement<any>,
+    position: Position,
+    isResizable: boolean
+  ) => ReactElement<any>,
 
   onDrag?: GridItemCallback<GridDragEvent>,
   onDragStart?: GridItemCallback<GridDragEvent>,
@@ -138,6 +146,10 @@ export default class GridItem extends React.Component<Props, State> {
     // ID is nice to have for callbacks
     i: PropTypes.string.isRequired,
 
+    // Mixins
+    mixinDraggable: PropTypes.func,
+    mixinResizable: PropTypes.func,
+
     // Functions
     onDragStop: PropTypes.func,
     onDragStart: PropTypes.func,
@@ -180,6 +192,20 @@ export default class GridItem extends React.Component<Props, State> {
     maxW: Infinity,
     transformScale: 1
   };
+
+  constructor(props: Props) {
+    super(props);
+
+    const { mixinDraggable, mixinResizable } = props;
+
+    if (mixinResizable) {
+      this.mixinResizable = props.mixinResizable.bind(this);
+    }
+
+    if (mixinDraggable) {
+      this.mixinDraggable = props.mixinDraggable.bind(this);
+    }
+  }
 
   state: State = {
     resizing: null,
@@ -304,89 +330,6 @@ export default class GridItem extends React.Component<Props, State> {
     }
 
     return style;
-  }
-
-  /**
-   * Mix a Draggable instance into a child.
-   * @param  {Element} child    Child element.
-   * @return {Element}          Child wrapped in Draggable.
-   */
-  mixinDraggable(
-    child: ReactElement<any>,
-    isDraggable: boolean
-  ): ReactElement<any> {
-    return (
-      <DraggableCore
-        disabled={!isDraggable}
-        onStart={this.onDragStart}
-        onDrag={this.onDrag}
-        onStop={this.onDragStop}
-        handle={this.props.handle}
-        cancel={
-          ".react-resizable-handle" +
-          (this.props.cancel ? "," + this.props.cancel : "")
-        }
-        scale={this.props.transformScale}
-      >
-        {child}
-      </DraggableCore>
-    );
-  }
-
-  /**
-   * Mix a Resizable instance into a child.
-   * @param  {Element} child    Child element.
-   * @param  {Object} position  Position object (pixel values)
-   * @return {Element}          Child wrapped in Resizable.
-   */
-  mixinResizable(
-    child: ReactElement<any>,
-    position: Position,
-    isResizable: boolean
-  ): ReactElement<any> {
-    const {
-      cols,
-      x,
-      minW,
-      minH,
-      maxW,
-      maxH,
-      transformScale,
-      resizeHandles
-    } = this.props;
-    const positionParams = this.getPositionParams();
-
-    // This is the max possible width - doesn't go to infinity because of the width of the window
-    const maxWidth = calcGridItemPosition(positionParams, 0, 0, cols - x, 0)
-      .width;
-
-    // Calculate min/max constraints using our min & maxes
-    const mins = calcGridItemPosition(positionParams, 0, 0, minW, minH);
-    const maxes = calcGridItemPosition(positionParams, 0, 0, maxW, maxH);
-    const minConstraints = [mins.width, mins.height];
-    const maxConstraints = [
-      Math.min(maxes.width, maxWidth),
-      Math.min(maxes.height, Infinity)
-    ];
-    return (
-      <Resizable
-        draggableOpts={{
-          disabled: !isResizable
-        }}
-        className={isResizable ? undefined : "react-resizable-hide"}
-        width={position.width}
-        height={position.height}
-        minConstraints={minConstraints}
-        maxConstraints={maxConstraints}
-        onResizeStop={this.onResizeStop}
-        onResizeStart={this.onResizeStart}
-        onResize={this.onResize}
-        transformScale={transformScale}
-        resizeHandles={resizeHandles}
-      >
-        {child}
-      </Resizable>
-    );
   }
 
   /**
@@ -628,10 +571,13 @@ export default class GridItem extends React.Component<Props, State> {
     });
 
     // Resizable support. This is usually on but the user can toggle it off.
-    newChild = this.mixinResizable(newChild, pos, isResizable);
+    if (isResizable && this.mixinResizable) {
+      newChild = this.mixinResizable(newChild, pos, isResizable);
+    }
 
-    // Draggable support. This is always on, except for with placeholders.
-    newChild = this.mixinDraggable(newChild, isDraggable);
+    if (isDraggable && this.mixinDraggable) {
+      newChild = this.mixinDraggable(newChild, isDraggable);
+    }
 
     return newChild;
   }
