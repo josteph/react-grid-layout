@@ -60,13 +60,13 @@ test-watch:
 test-update-snapshots:
 	env NODE_ENV=test $(BIN)/jest --updateSnapshot
 
-release-patch: build lint test
+release-patch: build test
 	@$(call release,patch)
 
-release-minor: build lint test
+release-minor: build test
 	@$(call release,minor)
 
-release-major: build lint test
+release-major: build test
 	@$(call release,major)
 
 publish:
