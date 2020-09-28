@@ -84,6 +84,6 @@ define release
 			require('fs').writeFileSync(fileName, s);\
 		});" && \
 	git add package.json CHANGELOG.md $(MIN) $(MIN_MAP) && \
-	git commit -m "release $$NEXT_VERSION" && \
+	git commit -m "release $$NEXT_VERSION" --no-verify && \
 	git tag "$$NEXT_VERSION" -m "release $$NEXT_VERSION"
 endef
