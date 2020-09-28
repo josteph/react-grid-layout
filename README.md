@@ -104,14 +104,15 @@ RGL is React-only and does not require jQuery.
 Install the React-Grid-Layout [package](https://www.npmjs.org/package/react-grid-layout) package using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install react-grid-layout
+npm install @josteph/react-grid-layout
 ```
 
 Include the following stylesheets in your application:
 
 ```
-/node_modules/react-grid-layout/css/styles.css
-/node_modules/react-resizable/css/styles.css
+@josteph/react-grid-layout/css/styles.css
+
+react-resizable/css/styles.css
 ```
 
 ## Usage
@@ -124,7 +125,7 @@ produce a grid with three items where:
 - users will be able to freely drag and resize item `c`
 
 ```js
-import GridLayout from 'react-grid-layout';
+import GridLayout from '@josteph/react-grid-layout';
 
 class MyFirstGrid extends React.Component {
   render() {
@@ -148,7 +149,7 @@ class MyFirstGrid extends React.Component {
 You may also choose to set layout properties directly on the children:
 
 ```js
-import GridLayout from 'react-grid-layout';
+import GridLayout from '@josteph/react-grid-layout';
 
 class MyFirstGrid extends React.Component {
   render() {
@@ -210,7 +211,7 @@ positions on drag events. In simple cases a HOC `WidthProvider` can be used to a
 width upon initialization and window resize events.
 
 ```js
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider } from '@josteph/react-grid-layout';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

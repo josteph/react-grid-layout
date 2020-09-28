@@ -88,7 +88,8 @@
   "files": [
     "lib",
     "dist",
-    "mixins"
+    "mixins",
+    "css"
   ],
   "jest": {
     "setupFilesAfterEnv": [
@@ -110,7 +111,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && make lint && make test"
+      "pre-commit": "lint-staged && make test"
     }
   }
 }

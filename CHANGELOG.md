@@ -1,5 +1,17 @@
 # Changelog
 
+1.1.3 (Sep 10, 2020)
+---
+
+Republish to add `css/` folder.
+
+1.1.2 (Sep 10, 2020)
+---
+
+### Breaking Changes
+  - Draggables and resizable are now mixins, they are separated into different folder. See readme in Mixins section.
+  - Publish selected files only: css, dist, mixins, lib
+
 1.1.1 (Sep 10, 2020)
 ---
 
