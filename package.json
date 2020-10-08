@@ -87,6 +87,7 @@
   },
   "files": [
     "lib",
+    "build",
     "dist",
     "mixins",
     "css"
