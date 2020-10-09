@@ -12,7 +12,7 @@ MIN_MAP = $(DIST)/react-grid-layout.min.js.map
 .PHONY: test dev lint build clean install link
 
 
-build: clean build-js transpile-mixins $(MIN)
+build: clean build-js $(MIN)
 
 clean:
 	rm -rf $(BUILD) $(DIST)
@@ -31,9 +31,6 @@ dist/%.min.js: $(LIB) $(BIN)
 
 build-js:
 	@$(BIN)/babel --out-dir $(BUILD) $(LIB)
-
-transpile-mixins:
-	@$(BIN)/babel lib/mixins -d mixins --extensions '.js,.jsx'
 
 # Will build for use on github pages. Full url of page is
 # https://strml.github.io/react-grid-layout/examples/0-showcase.html
@@ -84,6 +81,6 @@ define release
 			require('fs').writeFileSync(fileName, s);\
 		});" && \
 	git add package.json CHANGELOG.md $(MIN) $(MIN_MAP) && \
-	git commit -m "release $$NEXT_VERSION" --no-verify && \
+	git commit -m "Release $$NEXT_VERSION" --no-verify && \
 	git tag "$$NEXT_VERSION" -m "release $$NEXT_VERSION"
 endef

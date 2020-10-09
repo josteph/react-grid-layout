@@ -1,5 +1,15 @@
 # Changelog
 
+1.1.5 (Oct 9, 2020)
+---
+
+Remove transpile for mixins folder, use the one from `build` because it depends on the utility.
+
+1.1.4 (Oct 8, 2020)
+---
+
+Republish to add `build/` folder.
+
 1.1.3 (Sep 10, 2020)
 ---
 

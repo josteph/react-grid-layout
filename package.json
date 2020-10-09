@@ -89,7 +89,6 @@
     "lib",
     "build",
     "dist",
-    "mixins",
     "css"
   ],
   "jest": {
