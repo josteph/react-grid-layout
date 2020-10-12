@@ -1,5 +1,10 @@
 # Changelog
 
+1.1.6 (Oct 9, 2020)
+---
+
+Spread layout item object so it will carry over existing key objects per each item in layouts array.
+
 1.1.5 (Oct 9, 2020)
 ---
 
