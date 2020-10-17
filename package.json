@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:STRML/react-grid-layout.git"
+    "url": "git@github.com:josteph/react-grid-layout.git"
   },
   "keywords": [
     "react",
@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/STRML/react-grid-layout/issues"
   },
-  "homepage": "https://github.com/STRML/react-grid-layout",
+  "homepage": "https://github.com/josteph/react-grid-layout",
   "dependencies": {
     "classnames": "2.x",
     "lodash.isequal": "^4.0.0",
@@ -83,7 +83,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "access": "public"
   },
   "files": [
     "lib",
