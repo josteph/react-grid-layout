@@ -1,4 +1,23 @@
-# React-Grid-Layout (FORKED)
+# React-Grid-Layout (Forked)
+
+### Mixins
+
+In this forked version, by default resizable & draggable will not be included in the main file, they are separated into each mixins, for the purpose of splitting bundle sizes.
+
+The mixins can be applied to every items by passing into the `<ReactGridLayout>` as such:
+
+```js
+import mixinDraggable from "@josteph/react-grid-layout/build/mixins/draggable";
+import mixinResizable from "@josteph/react-grid-layout/build/mixins/resizable";
+
+return <ReactGridLayout mixinResizable={mixinResizable} mixinDraggable={mixinDraggable}>;
+```
+
+or you can apply it to each of grid item manually (see [Grid Item Props](#grid-item-props)).
+
+This forked version has total bundle size of **[14.8kb](https://bundlephobia.com/result?p=@wpe-tkpd/react-grid-layout)**.
+
+---- End of forked information ----
 
 [![travis build](https://travis-ci.org/STRML/react-grid-layout.svg?branch=master)](https://travis-ci.org/STRML/react-grid-layout)
 [![CDNJS](https://img.shields.io/cdnjs/v/react-grid-layout.svg)](https://cdnjs.com/libraries/react-grid-layout)
@@ -491,21 +510,6 @@ will be draggable, even if the item is marked `static: true`.
   isBounded: ?boolean = false
 }
 ```
-
-### Mixins
-
-In this forked version, by default resizable & draggable will not be included in the main file, they are separated into each mixins, for the purpose of splitting bundle sizes.
-
-The mixins can be applied to every items by passing into the `<ReactGridLayout>` as such:
-
-```js
-import mixinDraggable from "@josteph/react-grid-layout/build/mixins/draggable";
-import mixinResizable from "@josteph/react-grid-layout/build/mixins/resizable";
-
-return <ReactGridLayout mixinResizable={mixinResizable} mixinDraggable={mixinDraggable}>;
-```
-
-or you can apply it to each of grid item manually (see **Grid Item Props** section).
 
 ### Performance
 
